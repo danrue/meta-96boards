@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 require custom-kernel-info.inc
 
 DESCRIPTION = "Generic Linux kernel"
@@ -90,7 +89,7 @@ do_configure() {
 
     # Since kselftest-merge target may not be available, merge the individual
     # selftests config fragments included in the kernel source tree
-    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config ${S}/tools/testing/selftests/*/config 1>&2 )
+    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config 1>&2 )
 
     oe_runmake -C ${S} O=${B} olddefconfig
 

@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "Common Android kernel - 4.9 O"
 
@@ -11,13 +10,6 @@ SRC_URI = "\
     git://android.googlesource.com/kernel/common;protocol=https;branch=android-4.9-o;name=kernel \
     file://distro-overrides.config;subdir=git/kernel/configs \
     file://systemd.config;subdir=git/kernel/configs \
-    file://0001-selftests-lib-add-config-fragment-for-bitmap-printf-.patch \
-    file://0001-selftests-ftrace-add-CONFIG_KPROBES-y-to-the-config-.patch \
-    file://0001-selftests-vm-add-CONFIG_SYSVIPC-y-to-the-config-frag.patch \
-    file://0001-selftests-gpio-add-config-fragment-for-gpio-mockup.patch \
-    file://0001-selftests-create-cpufreq-kconfig-fragments.patch \
-    file://0001-selftests-sync-add-config-fragment-for-testing-sync-.patch \
-    file://0001-selftests-ftrace-add-more-config-fragments.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -79,8 +71,6 @@ do_configure() {
     fi
 
     oe_runmake -C ${S} O=${B} olddefconfig
-
-    oe_runmake -C ${S} O=${B} kselftest-merge
 
     bbplain "Saving defconfig to:\n${B}/defconfig"
     oe_runmake -C ${B} savedefconfig

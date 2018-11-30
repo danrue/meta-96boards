@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "Generic 4.15 LTS kernel"
 
@@ -93,8 +92,6 @@ do_configure() {
     fi
 
     oe_runmake -C ${S} O=${B} olddefconfig
-
-    oe_runmake -C ${S} O=${B} kselftest-merge
 
     bbplain "Saving defconfig to:\n${B}/defconfig"
     oe_runmake -C ${B} savedefconfig

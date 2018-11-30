@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "HiSilicon Landing Team kernel for HiKey"
 
@@ -11,15 +10,6 @@ SRC_URI = "\
     git://github.com/96boards-hikey/linux.git;protocol=https;branch=hikey-mainline-rebase-4.4.x;name=kernel \
     file://distro-overrides.config;subdir=git/kernel/configs \
     file://systemd.config;subdir=git/kernel/configs \
-    file://0001-selftests-lib-add-config-fragment-for-bitmap-printf-.patch \
-    file://0005-selftests-create-cpufreq-kconfig-fragments.patch \
-    file://0001-selftests-sync-add-config-fragment-for-testing-sync-.patch \
-    file://0002-4.4-selftests-ftrace-add-config-fragment.patch \
-    file://0003-4.4-selftests-vm-add-config-fragment-fragment.patch \
-    file://0004-4.4-selftests-firmware-add-config-fragment-fragment.patch \
-    file://0005-4.4-selftests-static_keys-add-config-fragment-fragment.patch \
-    file://0006-4.4-selftests-user-add-config-fragment-fragment.patch \
-    file://0007-4.4-selftests-zram-add-config-fragment-fragment.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -65,7 +55,7 @@ do_configure() {
 
     # Since kselftest-merge target isn't available, merge the individual
     # selftests config fragments included in the kernel source tree
-    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config ${S}/tools/testing/selftests/*/config 1>&2 )
+    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config )
 
     oe_runmake -C ${S} O=${B} olddefconfig
 

@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "Generic 4.9 LTS kernel"
 
@@ -12,12 +11,6 @@ SRC_URI = "\
     file://lkft.config;subdir=git/kernel/configs \
     file://distro-overrides.config;subdir=git/kernel/configs \
     file://systemd.config;subdir=git/kernel/configs \
-    file://0001-selftests-lib-add-config-fragment-for-bitmap-printf-.patch \
-    file://0001-selftests-ftrace-add-CONFIG_KPROBES-y-to-the-config-.patch \
-    file://0001-selftests-vm-add-CONFIG_SYSVIPC-y-to-the-config-frag.patch \
-    file://0001-selftests-gpio-add-config-fragment-for-gpio-mockup.patch \
-    file://0001-selftests-create-cpufreq-kconfig-fragments.patch \
-    file://0001-selftests-ftrace-add-more-config-fragments.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -89,8 +82,6 @@ do_configure() {
     fi
 
     oe_runmake -C ${S} O=${B} olddefconfig
-
-    oe_runmake -C ${S} O=${B} kselftest-merge
 
     bbplain "Saving defconfig to:\n${B}/defconfig"
     oe_runmake -C ${B} savedefconfig

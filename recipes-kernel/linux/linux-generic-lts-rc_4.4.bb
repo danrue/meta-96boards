@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "Generic Linux Stable RC 4.4"
 
@@ -11,12 +10,6 @@ SRC_URI = "\
     git://git.linaro.org/lkft/arm64-stable-rc.git;protocol=https;nobranch=1;name=kernel \
     file://distro-overrides.config;subdir=git/kernel/configs \
     file://systemd.config;subdir=git/kernel/configs \
-    file://0001-selftests-create-test-specific-kconfig-fragments.patch \
-    file://0001-selftests-lib-add-config-fragment-for-bitmap-printf-.patch \
-    file://0001-selftests-ftrace-add-CONFIG_KPROBES-y-to-the-config-.patch \
-    file://0001-selftests-vm-add-CONFIG_SYSVIPC-y-to-the-config-frag.patch \
-    file://0001-selftests-create-cpufreq-kconfig-fragments.patch \
-    file://0001-selftests-ftrace-add-more-config-fragments.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -79,7 +72,7 @@ do_configure() {
 
     # Since kselftest-merge target isn't available, merge the individual
     # selftests config fragments included in the kernel source tree
-    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config ${S}/tools/testing/selftests/*/config 1>&2 )
+    ( cd ${WORKDIR} && ${S}/scripts/kconfig/merge_config.sh -m -r -O ${B} ${B}/.config )
 
     oe_runmake -C ${S} O=${B} olddefconfig
 

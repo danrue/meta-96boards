@@ -1,5 +1,4 @@
 require linux.inc
-require kselftests.inc
 
 DESCRIPTION = "AOSP kernel for HiKey"
 
@@ -11,7 +10,6 @@ SRC_URI = "\
     git://android.googlesource.com/kernel/hikey-linaro;protocol=https;branch=android-hikey-linaro-4.14;name=kernel \
     file://distro-overrides.config;subdir=git/kernel/configs \
     file://systemd.config;subdir=git/kernel/configs \
-    file://0001-selftests-ftrace-add-more-config-fragments.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -74,8 +72,6 @@ do_configure() {
     fi
 
     oe_runmake -C ${S} O=${B} olddefconfig
-
-    oe_runmake -C ${S} O=${B} kselftest-merge
 
     bbplain "Saving defconfig to:\n${B}/defconfig"
     oe_runmake -C ${B} savedefconfig
